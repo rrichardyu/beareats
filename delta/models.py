@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Rating(models.Model):
-    user = models.ManyToManyField(User)
+    user = models.ManyToManyField(User, null=True, blank=False)
     when = models.DateTimeField(auto_now=True)
     rating = models.IntegerField()
 
@@ -11,13 +11,13 @@ class FoodItem(models.Model):
     uid = models.CharField(max_length=64)
     name = models.CharField(max_length=128)
     category = models.CharField(max_length=64)
-    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    rating = models.ForeignKey(Rating, on_delete=models.CASCADE, null=True, blank=False)
 
 class MealPeriod(models.Model):
     period = models.CharField(max_length=18)
     date = models.DateField()
-    items_offered = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    items_offered = models.ForeignKey(FoodItem, on_delete=models.CASCADE, null=True, blank=False)
 
 class DiningLocation(models.Model):
     location = models.CharField(max_length=18)
-    meal_period = models.ForeignKey(MealPeriod, on_delete=models.CASCADE)
+    meal_period = models.ForeignKey(MealPeriod, on_delete=models.CASCADE, null=True, blank=False)
