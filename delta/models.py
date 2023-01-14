@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class DiningLocation(models.Model):
     location = models.CharField(max_length=18)
+    identifier = models.CharField(max_length=18, null=True, blank=False)
 
     def __str__(self):
         return f"{self.location}"
