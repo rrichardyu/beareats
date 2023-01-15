@@ -5,7 +5,12 @@ from .models import DiningLocation, MealPeriod, MenuItem, Rating
 
 # Create your views here.
 def index(request):
-    return HttpResponse("You're at 'delta', the user dashboard for BearEats.")
+    #return HttpResponse("You're at 'delta', the user dashboard for BearEats.")
+    context = {
+        "locations": DiningLocation.objects.all(),
+    }
+
+    return render(request, "delta/index.html", context)
 
 def dining_location(request, location):
     dining_location = get_object_or_404(DiningLocation, identifier=location)
@@ -15,7 +20,7 @@ def dining_location(request, location):
         meal_period: [
             (
                 menu_item, 
-                sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()), 
+                sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()) if len(menu_item.ratings.all()) else 0, 
                 len(menu_item.ratings.all())
             ) for menu_item in meal_period.menu_items.all()
             ] for meal_period in meal_periods

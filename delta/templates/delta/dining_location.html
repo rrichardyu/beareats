@@ -15,7 +15,11 @@
                 {% for menu_item in menu_items %}
                     <li>
                         {{ menu_item.0.name }} (Category: {{ menu_item.0.category }}, UID: {{ menu_item.0.uid }}) / 
-                        Rating: {{ menu_item.1 }}/5.0 ({{ menu_item.2 }})
+                        {% if menu_item.1 %}
+                            Rating: {{ menu_item.1 }}/5.0 ({{ menu_item.2 }})
+                        {% else %}
+                            No ratings
+                        {% endif %}
                     </li>
                 {% endfor %}
             {% else %}
