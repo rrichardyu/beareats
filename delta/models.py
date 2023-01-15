@@ -10,7 +10,7 @@ class DiningLocation(models.Model):
         return f"{self.location}"
 
 class MealPeriod(models.Model):
-    location = models.ForeignKey(DiningLocation, on_delete=models.CASCADE, null=True, blank=False)
+    location = models.ForeignKey(DiningLocation, on_delete=models.CASCADE, related_name="meal_periods", null=True, blank=False)
     period = models.CharField(max_length=18)
     date = models.DateField()
 
@@ -18,7 +18,7 @@ class MealPeriod(models.Model):
         return f"{self.period} at {self.location.location} on {str(self.date)}"
 
 class MenuItem(models.Model):
-    meal_period = models.ForeignKey(MealPeriod, on_delete=models.CASCADE, null=True, blank=False)
+    meal_period = models.ForeignKey(MealPeriod, on_delete=models.CASCADE, related_name="menu_items", null=True, blank=False)
     uid = models.CharField(max_length=64)
     name = models.CharField(max_length=128)
     category = models.CharField(max_length=64)
@@ -27,7 +27,7 @@ class MenuItem(models.Model):
         return f"{self.name} ({self.category}) during {self.meal_period.period} at {self.meal_period.location.location} (UID: {self.uid})"
 
 class Rating(models.Model):
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, null=True, blank=False)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="ratings", null=True, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=False)
     rating = models.IntegerField()
     when = models.DateTimeField()

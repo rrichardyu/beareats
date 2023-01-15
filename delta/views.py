@@ -9,7 +9,21 @@ def index(request):
 
 def dining_location(request, location):
     dining_location = get_object_or_404(DiningLocation, identifier=location)
+    meal_periods = dining_location.meal_periods.all()
+
+    menu_data = {
+        meal_period: [
+            (
+                menu_item, 
+                sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()), 
+                len(menu_item.ratings.all())
+            ) for menu_item in meal_period.menu_items.all()
+            ] for meal_period in meal_periods
+        }
+
     context = {
-        "location": dining_location
+        "location": dining_location,
+        "menu_data": menu_data,
     }
+
     return render(request, "delta/dining_location.html", context)
