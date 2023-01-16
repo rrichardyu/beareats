@@ -11,6 +11,7 @@ class DiningLocation(models.Model):
 
 class MealPeriod(models.Model):
     location = models.ForeignKey(DiningLocation, on_delete=models.CASCADE, related_name="meal_periods", null=True, blank=False)
+    uid = models.CharField(max_length=64)
     period = models.CharField(max_length=18)
     date = models.DateField()
 
