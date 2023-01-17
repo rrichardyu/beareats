@@ -29,7 +29,7 @@ def dining_location(request, location):
         meal_period: [
             (
                 menu_item, 
-                sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()) if len(menu_item.ratings.all()) else 0, 
+                round(sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()) if len(menu_item.ratings.all()) else 0, 2), 
                 len(menu_item.ratings.all())
             ) for menu_item in meal_period.menu_items.all()
             ] for meal_period in meal_periods
@@ -41,6 +41,3 @@ def dining_location(request, location):
     }
 
     return render(request, "delta/dining_location.html", context)
-
-def rate_menu_item(request, location, menu_item_uid, user_rating):
-    return HttpResponse(f"Rated {user_rating}* for {menu_item_uid}")
