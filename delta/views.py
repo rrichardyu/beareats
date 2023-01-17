@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from django.utils import timezone
 
 from .models import DiningLocation, MealPeriod, MenuItem, Rating
 import datetime
@@ -19,7 +20,7 @@ def dining_location(request, location):
         rating = req_data.get("star")
         selected_menu_item = MenuItem.objects.get(uid=req_data["menu_item_uid"])
 
-        rating_object = Rating(menu_item=selected_menu_item, user=None, rating=int(rating), when=datetime.datetime.now())
+        rating_object = Rating(menu_item=selected_menu_item, user=None, rating=int(rating), when=datetime.datetime.now(tz=timezone.utc))
         rating_object.save()
 
     dining_location = get_object_or_404(DiningLocation, identifier=location)
