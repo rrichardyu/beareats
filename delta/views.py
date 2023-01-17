@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 
 from .models import DiningLocation, MealPeriod, MenuItem, Rating
+import datetime
 
 # Create your views here.
 def index(request):
@@ -13,6 +14,14 @@ def index(request):
     return render(request, "delta/index.html", context)
 
 def dining_location(request, location):
+    if request.method == "POST":
+        req_data = request.POST
+        rating = req_data.get("star")
+        selected_menu_item = MenuItem.objects.get(uid=req_data["menu_item_uid"])
+
+        rating_object = Rating(menu_item=selected_menu_item, user=None, rating=int(rating), when=datetime.datetime.now())
+        rating_object.save()
+
     dining_location = get_object_or_404(DiningLocation, identifier=location)
     meal_periods = dining_location.meal_periods.all()
 
@@ -32,3 +41,6 @@ def dining_location(request, location):
     }
 
     return render(request, "delta/dining_location.html", context)
+
+def rate_menu_item(request, location, menu_item_uid, user_rating):
+    return HttpResponse(f"Rated {user_rating}* for {menu_item_uid}")

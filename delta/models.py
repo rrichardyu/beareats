@@ -34,4 +34,4 @@ class Rating(models.Model):
     when = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.menu_item.name} rated {self.rating} by {self.user.username} on {str(self.when)}"
+        return f"{self.menu_item.name} rated {self.rating} on {str(self.when)}"

@@ -5,5 +5,5 @@ urlpatterns = [
     # e.g. /dashboard/
     path('', views.index, name='index'),
     # e.g. /dashboard/crossroads
-    path('<str:location>/', views.dining_location, name='dining_location')
+    path('<str:location>/', views.dining_location, name='dining_location'),
 ]
