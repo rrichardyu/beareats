@@ -1,43 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ location }} - BearEats</title>
-</head>
-<body>
-    <h1>{{ location }}</h1>
-    {% if menu_data.items %}
-        {% for meal_period, menu_items in menu_data.items %}
-            <h3>{{ meal_period.period }} on {{ meal_period.date }}</h3>
-            <ul>
-            {% if menu_items %}
-                {% for menu_item in menu_items %}
-                    <li>
-                        {{ menu_item.0.name }} (Category: {{ menu_item.0.category }}) / 
-                        {% if menu_item.1 %}
-                            Rating: {{ menu_item.1 }}★/5.0★ ({{ menu_item.2 }})
-                        {% else %}
-                            No ratings
-                        {% endif %}
+{% extends "base.html" %}
 
-                        <form method="POST">
-                            {% csrf_token %}
-                            <a>Add your rating - </a>
-                            <input type="hidden" name="menu_item_uid" value="{{ menu_item.0.uid }}" />
-                            {% for i in "12345" %}
-                                <button type="submit" name="star" value="{{ i }}">☆</a>
-                            {% endfor %}
-                        </form>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li>No menu items available.</li>
-            {% endif %}
-            </ul>
-        {% endfor %}
-    {% else %}
-        <p>No meal periods available.</p>
-    {% endif %}
-</body>
-</html>
+{% block title %}{{ location }} - BearEats{% endblock %}
+
+{% block content %}
+<h1>{{ location }}</h1>
+{% if menu_data.items %}
+    {% for meal_period, menu_items in menu_data.items %}
+        <h3>{{ meal_period.period }} on {{ meal_period.date }}</h3>
+        <ul>
+        {% if menu_items %}
+            {% for menu_item in menu_items %}
+                <li>
+                    {{ menu_item.0.name }} (Category: {{ menu_item.0.category }}) / 
+                    {% if menu_item.1 %}
+                        Rating: {{ menu_item.1 }}★/5.0★ ({{ menu_item.2 }})
+                    {% else %}
+                        No ratings
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <a>Add your rating - </a>
+                        <input type="hidden" name="menu_item_uid" value="{{ menu_item.0.uid }}" />
+                        {% for i in "12345" %}
+                            <button type="submit" name="star" value="{{ i }}">☆</a>
+                        {% endfor %}
+                    </form>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No menu items available.</li>
+        {% endif %}
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No meal periods available.</p>
+{% endif %}
+{% endblock %}
