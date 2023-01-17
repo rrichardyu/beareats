@@ -33,7 +33,7 @@ def dining_location(request, location):
                 round(sum([rating.rating for rating in menu_item.ratings.all()]) / len(menu_item.ratings.all()) if len(menu_item.ratings.all()) else 0, 2), 
                 len(menu_item.ratings.all())
             ) for menu_item in meal_period.menu_items.all()
-            ] for meal_period in meal_periods
+            ] for meal_period in meal_periods if meal_period.date == datetime.date.today()
         }
 
     context = {
