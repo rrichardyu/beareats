@@ -1,18 +1,32 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'delta/style.css' %}">
     <title>{% block title %}BearEats{% endblock %}</title>
 </head>
 <body>
-    <div id="navbar">
-        <h1>BearEats</h1>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/admin">Admin</a>
-    </div>
-    {% block content %}
+    <div id="container">
+        <div id="wrapper">
+            <div id="nav_bar">
+                <h1 class="nav_bar_left nav_item">BearEats</h1>
+                <a class="nav_item" href="/dashboard">Dashboard</a>
+                <a class="nav_item" href="/admin">Admin</a>
+            </div>
+            <div id="content">
+            {% block content %}
 
-    {% endblock %}
+            {% endblock %}
+            </div>
+
+            <footer>
+                <p class="footer_row">© Copyright 2023 • <a class="footer" href="https://github.com/itsrichardyu/beareats" target="_blank">Source Code</a> • Data from <a class="footer" href="https://caldining.berkeley.edu" target="_blank">Cal Dining</a> • Built with <a class="footer" href="https://djangoproject.com/" target="_blank">Django</a></p>
+                <p class="footer_row">This project is not affiliated with the University of California, Berkeley.</p>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>

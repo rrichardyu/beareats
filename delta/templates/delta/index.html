@@ -3,9 +3,11 @@
 {% block title %}Dashboard - BearEats{% endblock %}
 
 {% block content %}
-<h1>All Dining Locations</h1>
-{% for location in locations %}
-    <a href="{{ location.identifier }}/">{{ location.location }}</a>
-    <br />
-{% endfor %}
+<div id="main_content">
+    <h1>All Dining Locations</h1>
+    {% for location in locations %}
+        <a href="{{ location.identifier }}/">{{ location.location }}</a>
+        <br />
+    {% endfor %}
+</div>
 {% endblock %}
